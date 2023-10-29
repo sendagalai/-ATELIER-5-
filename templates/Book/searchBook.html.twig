@@ -1,0 +1,35 @@
+<h2>Résultats de la recherche</h2>
+
+<form action="{{ path('app_list2') }}" method="post">
+    {{ form_start(searchForm) }}
+    {{ form_row(searchForm.ref) }}
+    {{ form_row(searchForm.search) }}
+    {{ form_end(searchForm) }}
+</form>
+
+{% if books is not empty %}
+    <table border="2">
+  <tr>
+    <th>title</th>
+    <th>category</th>
+    <th>publicationDate</th>
+    <th>published</th>
+    <th>author</th>
+    <th>edit</th>
+    <th>delete</th>
+  </tr>
+  {% for b in books %}
+  <tr>
+    <td>{{b.title}}</td>
+    <td>{{b.category}}</td>
+    <td>{{b.publicationDate |date('Y-m-d H:i:s')}}</td>
+    <td>{{b.published}}</td>
+    <td>{{b.getAuthor.getUsername()}}</td>
+    <td><a href="{{path('app_editBook', {'ref': b.ref}) }}">edit</a></td>
+    <td><a href="{{path('app_deleteBook', {'ref': b.ref}) }}">delete</a></td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+    <p>Aucun livre trouvé pour votre recherche.</p>
+{% endif %}

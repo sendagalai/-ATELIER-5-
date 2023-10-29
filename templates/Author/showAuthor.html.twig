@@ -1,0 +1,31 @@
+<table border="2">
+    <tr>
+        <td>id </td>
+        <td> photo</td>
+        <td>username</td>
+        <td>email</td>
+        <td> nb books</td>
+       
+    </tr>
+    {% for auth in a %}
+    {% if d == auth.id %}
+
+    <tr>
+        
+        <td>{{auth.id}}</td>
+        <td> <img src="{{auth.picture}}"></td>
+        <td>{{auth.username | upper}}</td>
+        <td>{{auth.email}}</td>
+        <td>{{auth.nb_books}}</td>
+
+</tr>
+ {% endif %}
+    {% endfor %}
+</table>
+
+{% set books=0 %}
+
+{%for a in a %}
+{% set books=books+a.nb_books %}
+{% endfor %}
+nb books={{books}}

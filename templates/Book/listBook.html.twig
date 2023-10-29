@@ -1,0 +1,52 @@
+{{ dump(a) }}
+<div>
+    <h2>Book List</h2>
+     <form method="get" action="{{ path('listBook') }}">
+        <label for="ref">Ref:</label>
+        <input type="text" name="ref"  value="{{ app.request.get('ref') }}">
+        <button type="submit">Search</button>
+    </form>
+    {% set nbpublished = 0 %}
+    {% set nbunpublished = 0 %}
+    {% if a is empty %}
+        <p>No books have been found.</p>
+
+    {% else %}
+        <table border="2">
+            <tr>
+            
+                <th>Title</th>
+                <th>Category</th>
+                <th>Publication Date</th>
+                <th>Published</th>
+                <th>Author</th>
+                <th>Action</th>
+            </tr>
+            {% for b in a %}
+                {% if b.published == true %}
+                    {% set nbpublished = nbpublished + 1 %}
+                    <tr>
+                        <td>{{ b.title }}</td>
+                        <td>{{ b.category }}</td>
+                        <td>{{ b.datePublication|date }}</td> 
+                        <td>{{ b.published }}</td>
+                        <td>{{ b.Author.username }}</td>
+                         <td><a href={{path('updateBook',{'ref':b.ref})}}>edit</a>
+                          <a href={{path('deleteBook',{'ref':b.ref})}}>delete</a></td>
+                    </tr>
+                {% else %}
+                    {% set nbunpublished = nbunpublished + 1 %}
+                {% endif %}
+            {% endfor %}
+        </table>
+    {% endif %}
+    <p>
+        Number of published books: {{ nbpublished }}<br>
+        Number of unpublished books: {{ nbunpublished }}
+    </p>
+     
+  <form action="{{ path('addBook') }}">
+        <input type="submit" value="Create New">
+    
+    </form>
+</div>
